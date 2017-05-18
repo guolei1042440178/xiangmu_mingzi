@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myApp">
+<head>
+    <meta charset="UTF-8">
+    <title>angular_http</title>
+</head>
+<body>
+    <div ng-controller="myController">
+        <button ng-click="getDataAction()">获取数据</button>
+    </div>
+</body>
+<script src="../lib/angular.js"></script>
+<script>
+
+    // http://c.m.163.com/nc/article/headline/T1348647853363/0-140.html
+    var app = angular.module("myApp" , [])
+            .controller("myController" , function ($scope , $http) {
+                $scope.getDataAction = function () {
+                    console.log("开始获取数据");
+//                    $http()
+//                            .success()
+//                            .error()
+
+                    var url = "http://c.m.163.com/nc/article/headline/T1348647853363/0-140.html";
+                    url = encodeURIComponent(url);
+                    url = "http://localhost:3000?myUrl=" + url;
+
+//                    $http({
+//                        url: url ,
+//                        method: "get"
+//                    })
+//                            .then(function (res) {
+//                                console.log(res);
+//                            } , function (err) {
+//                                console.log(err);
+//                            });
+
+
+                    // 通过jsonp方式 请求数据
+                    // jsonp 通过动态创建script元素来访问服务器
+                    // 把回调函数名作为参数传递给服务器
+                    // 服务器请求得到数据以后,
+                    // 把数据放回到回调函数中
+                    // 前端通过回调函数的实现部分 , 得到数据
+//                    var script = document.createElement("script");
+//                    url = url + "&callback=xxx";
+//
+//                    script.src = url;
+//                    document.documentElement.appendChild(script);
+
+
+                    // angular $http服务中
+                    // 自带有jsonp的请求方式
+                    // 这样就不用我们动态的去创建script脚本了
+                    // 注意:
+                    // $http服务中, callback参数 必须写成JSON_CALLBACK
+                    // 意思是告诉angular自己去创建一个回调函数
+
+//                    var myUrl = "http://c.m.163.com/nc/article/headline/T1348647853363/0-140.html";
+//
+//                    $http({
+//                        method:"jsonp" ,
+//                        url: "http://localhost:3000?myUrl=" + myUrl + "&callback=JSON_CALLBACK"
+//                    })
+//                            .then(function (res) {
+//                                console.log(res);
+//                            } , function (err) {
+//                                cosnole.log(err);
+//                            });
+
+
+
+
+
+                    // $http post 请求
+//                    $http({
+//                        method: "post" ,
+//                        url: "http://localhost:3010" ,
+//                        headers: {
+//                            "Content-Type" : "application/x-www-form-urlencoded"
+//                        } ,
+//                        data: {
+//                            myUrl: "http://c.m.163.com/nc/article/headline/T1348647853363/0-140.html"
+//                        }
+//                    })
+//                            .then(function (res) {
+//                                console.log(res);
+//                            } , function (err) {
+//                                console.log(err);
+//                            });
+
+
+
+
+                    // promise 请求
+                    var promise = $http({
+                        method: "post" ,
+                        url : "http://localhost:3010" ,
+                        headers : {
+                            "Content-Type" : "application/x-www-form-urlencoded"
+                        } ,
+                        data: {
+                            myUrl: "http://c.m.163.com/nc/article/headline/T1348647853363/0-140.html"
+                        }
+                    });
+
+//                    promise.success(function (res) {
+//                        console.log(res);
+//                    });
+//
+//                    promise.error(function (err) {
+//                        console.log(err);
+//                    });
+
+                    promise.then(function (res) {
+                        console.log(res);
+                    } , function (err) {
+                        console.log(err);
+                    });
+
+
+
+
+                }
+
+
+            })
+
+    function xxx(res) {
+        console.log(res);
+    }
+
+</script>
+</html>
+
+
+
+
+
